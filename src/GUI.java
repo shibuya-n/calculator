@@ -2,82 +2,86 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class GUI extends JFrame {
+public class GUI{
 
     private static JTextField derivativeTextfield = new JTextField(16);
     private static JTextField integralTextfield = new JTextField(16);
     private static JTextField convertTextfield = new JTextField(16);
 
-    public GUI(){
-        super("CALCULATOR");
-        Container c = getContentPane();
-        c.setLayout(new GridLayout(3,1));
 
-        // ROW 1
-        JPanel x = new JPanel();
-        x.setLayout(new FlowLayout());
+    public static void createGUI(){
+        JLabel errorV = new JLabel();
+        JLabel errorT = new JLabel();
+        JLabel errorI = new JLabel();
 
-        // add text
-        x.add(new JLabel("DERIVATIVE CALCULATOR"));
+        // create window
+        JFrame window = new JFrame("Advanced Calculator");
+        window.setLayout(new GridLayout(6,1));
 
-        // add input
-        x.add(derivativeTextfield);
+        // volume section
+        JPanel volumeLabel = new JPanel();
+        volumeLabel.setLayout(new FlowLayout());
+        JLabel volume = new JLabel("CALCULATE VOLUME OF A SPHERE");
+        volumeLabel.add(volume);
 
-        // add button
-        JButton deriveButton = new JButton("DERIVE");
-        deriveButton.addActionListener(new JButton().getAction());
-        x.add(deriveButton);
+        JPanel volumeCalc = new JPanel();
+        volumeCalc.setLayout(new FlowLayout());
+        JLabel volumePrompt = new JLabel("RADIUS");
+        JTextField volumeInput = new JTextField(8);
+        JButton volumeButton = new JButton("Go");
+
+        volumeButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int input = 0;
+
+                try {
+                    input = Integer.parseInt(volumeInput.getText());
+                    double result = calculateVolume(input);
+
+                    JFrame resultWindow = new JFrame("YOUR VOLUME");
+                    resultWindow.setLayout(new FlowLayout());
+                    resultWindow.setBounds(100,100,300,150);
+                    resultWindow.add(new JLabel(String.valueOf(result)));
+                    resultWindow.setResizable(false);
+                    resultWindow.setVisible(true);
 
 
-        // ROW 2
-        JPanel y = new JPanel();
-        y.setLayout(new FlowLayout());
+                } catch (Exception f) {
+                     errorV.setText( "Error. Please input a number");
 
-        // add text
-        y.add(new JLabel("INTEGRAL CALCULATOR"));
+                }
 
-        // add input
-        y.add(integralTextfield);
+            }
+        });
 
-        // add button
-        JButton integralButton = new JButton("INTEGRAL");
-        integralButton.addActionListener(new JButton().getAction());
-        y.add(integralButton);
+        volumeCalc.add(volumePrompt);
+        volumeCalc.add(volumeInput);
+        volumeCalc.add(volumeButton);
 
-        // ROW 3
-        JPanel z = new JPanel();
-        z.setLayout(new FlowLayout());
+        // find missing angle
+        JPanel traingl
 
-        // add selectors
-        String[] s1 = {"BINARY"};
-        String[] s2 = {"BINARY"};
-        JComboBox binaryBox1 = new JComboBox(s1);
-        JComboBox binaryBox2 = new JComboBox(s2);
-        z.add(binaryBox1);
-        z.add(new JLabel("to"));
-        z.add(binaryBox2);
-
-        // add input
-        z.add(convertTextfield);
-
-        // add button
-        JButton convertButton = new JButton("CONVERT");
-        convertButton.addActionListener(new JButton().getAction());
-        z.add(convertButton);
-
+        // find compound interest
 
 
 
-        c.add(x);
-        c.add(y);
-        c.add(z);
-
-    }
-    public static void main(String[] args) {
-        GUI window = new GUI();
+        window.add(volumeLabel);
+        window.add(volumeCalc);
+        window.setBounds(100,100,500,300);
         window.setVisible(true);
-        window.setBounds(100,100,800,300);
-        window.setResizable(true);
+    }
+
+    public static double calculateVolume (int input){
+        double toReturn = (4.0/3.0) * (3.14) * Math.pow  (input, 3);
+        return toReturn;
+    }
+
+    public static void main(String[] args) {
+        createGUI();    
+
+
+
 
 
 
