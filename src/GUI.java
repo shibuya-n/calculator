@@ -9,20 +9,8 @@ public class GUI{
     private static JTextField convertTextfield = new JTextField(16);
 
 
-    public static void createGUI(){
+    public static JPanel volumeCalc(){
         JLabel errorV = new JLabel();
-        JLabel errorT = new JLabel();
-        JLabel errorI = new JLabel();
-
-        // create window
-        JFrame window = new JFrame("Advanced Calculator");
-        window.setLayout(new GridLayout(6,1));
-
-        // volume section
-        JPanel volumeLabel = new JPanel();
-        volumeLabel.setLayout(new FlowLayout());
-        JLabel volume = new JLabel("CALCULATE VOLUME OF A SPHERE");
-        volumeLabel.add(volume);
 
         JPanel volumeCalc = new JPanel();
         volumeCalc.setLayout(new FlowLayout());
@@ -48,7 +36,7 @@ public class GUI{
 
 
                 } catch (Exception f) {
-                     errorV.setText( "Error. Please input a number");
+                    errorV.setText( "Error. Please input a number");
 
                 }
 
@@ -59,16 +47,101 @@ public class GUI{
         volumeCalc.add(volumeInput);
         volumeCalc.add(volumeButton);
 
+        return volumeCalc;
+    }
+
+    public static JPanel triangleCalc(){
+        JLabel errorT = new JLabel();
+
+        JPanel triangleCalc = new JPanel();
+        triangleCalc.setLayout(new FlowLayout());
+        JPanel inputWindow = new JPanel();
+
+        inputWindow.setLayout(new GridLayout(3,1));
+        JLabel xPrompt = new JLabel("ANGLE X");
+        JTextField xInput = new JTextField(8);
+        JLabel yInput = new JLabel("ANGLE Y");
+        JTextField yPrompt = new JTextField(8);
+        JLabel zInput = new JLabel("ANGLE Z");
+        JTextField zPrompt = new JTextField(8);
+
+        inputWindow.add(xPrompt);
+        inputWindow.add(xInput);
+        inputWindow.add(yInput);
+        inputWindow.add(yPrompt);
+        inputWindow.add(zInput);
+        inputWindow.add(zPrompt);
+
+
+        JButton triangleButton = new JButton("Go");
+
+        triangleButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int input = 0;
+
+                try {
+                    input = Integer.parseInt(volumeInput.getText());
+                    double result = calculateVolume(input);
+
+                    JFrame resultWindow = new JFrame("YOUR VOLUME");
+                    resultWindow.setLayout(new FlowLayout());
+                    resultWindow.setBounds(100,100,300,150);
+                    resultWindow.add(new JLabel(String.valueOf(result)));
+                    resultWindow.setResizable(false);
+                    resultWindow.setVisible(true);
+
+
+                } catch (Exception f) {
+                    errorT.setText( "Error. Please input a number");
+
+                }
+
+            }
+        });
+        triangleCalc.add(inputWindow);
+        triangleCalc.add(triangleButton);
+
+        return triangleCalc;
+    }
+
+
+    public static void createGUI(){
+
+
+        JLabel errorI = new JLabel();
+
+        // create window
+        JFrame window = new JFrame("Advanced Calculator");
+        window.setLayout(new GridLayout(6,1));
+
+        // volume section
+        JPanel volumeLabel = new JPanel();
+        volumeLabel.setLayout(new FlowLayout());
+        JLabel volume = new JLabel("CALCULATE VOLUME OF A SPHERE");
+        volumeLabel.add(volume);
+
+
+
         // find missing angle
-        JPanel traingl
+        JPanel triangleLabel = new JPanel();
+        triangleLabel.setLayout(new FlowLayout());
+        JLabel triangle = new JLabel("CALCULATE MISSING TRIANGLE SIDE");
+        triangleLabel.add(triangle);
+
+
+
+
 
         // find compound interest
 
-
-
         window.add(volumeLabel);
-        window.add(volumeCalc);
-        window.setBounds(100,100,500,300);
+        window.add(volumeCalc());
+
+        window.add(triangleLabel);
+        window.add(triangleCalc);
+
+        window.setBounds(100,100,500,500);
         window.setVisible(true);
     }
 
