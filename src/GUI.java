@@ -60,15 +60,19 @@ public class GUI{
         inputWindow.setLayout(new GridLayout(3,1));
         JLabel xPrompt = new JLabel("ANGLE X");
         JTextField xInput = new JTextField(8);
+
         JLabel yInput = new JLabel("ANGLE Y");
         JTextField yPrompt = new JTextField(8);
+
         JLabel zInput = new JLabel("ANGLE Z");
         JTextField zPrompt = new JTextField(8);
 
         inputWindow.add(xPrompt);
         inputWindow.add(xInput);
+
         inputWindow.add(yInput);
         inputWindow.add(yPrompt);
+
         inputWindow.add(zInput);
         inputWindow.add(zPrompt);
 
@@ -78,18 +82,36 @@ public class GUI{
         triangleButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                int input = 0;
 
+                errorT.setText("");
                 try {
-                    input = Integer.parseInt(volumeInput.getText());
-                    double result = calculateVolume(input);
 
-                    JFrame resultWindow = new JFrame("YOUR VOLUME");
-                    resultWindow.setLayout(new FlowLayout());
-                    resultWindow.setBounds(100,100,300,150);
-                    resultWindow.add(new JLabel(String.valueOf(result)));
-                    resultWindow.setResizable(false);
-                    resultWindow.setVisible(true);
+
+                    String xValue = xInput.getText();
+                    String yValue = yInput.getText();
+                    String zValue = zInput.getText();
+
+                    if (xValue.equals("x") && !(yValue.equals("x") || zValue.equals("x"))){
+
+                    }
+                    else if (yValue.equals("x") && !(xValue.equals("x") || zValue.equals("x"))){
+
+                    } else if (zValue.equals("x") && !(xValue.equals("x") || yValue.equals("x"))){
+
+                    } else {
+                        errorT.setText( "Error. Please input a number");
+                    }
+
+                    System.out.println("works");
+//                    input = Integer.parseInt(volumeInput.getText());
+//                    double result = calculateVolume(input);
+//
+//                    JFrame resultWindow = new JFrame("YOUR VOLUME");
+//                    resultWindow.setLayout(new FlowLayout());
+//                    resultWindow.setBounds(100,100,300,150);
+//                    resultWindow.add(new JLabel(String.valueOf(result)));
+//                    resultWindow.setResizable(false);
+//                    resultWindow.setVisible(true);
 
 
                 } catch (Exception f) {
@@ -101,13 +123,13 @@ public class GUI{
         });
         triangleCalc.add(inputWindow);
         triangleCalc.add(triangleButton);
+        triangleCalc.add(errorT);
 
         return triangleCalc;
     }
 
 
     public static void createGUI(){
-
 
         JLabel errorI = new JLabel();
 
@@ -126,7 +148,7 @@ public class GUI{
         // find missing angle
         JPanel triangleLabel = new JPanel();
         triangleLabel.setLayout(new FlowLayout());
-        JLabel triangle = new JLabel("CALCULATE MISSING TRIANGLE SIDE");
+        JLabel triangle = new JLabel("CALCULATE MISSING TRIANGLE SIDE | input x for the side you want to solve for");
         triangleLabel.add(triangle);
 
 
@@ -139,7 +161,7 @@ public class GUI{
         window.add(volumeCalc());
 
         window.add(triangleLabel);
-        window.add(triangleCalc);
+        window.add(triangleCalc());
 
         window.setBounds(100,100,500,500);
         window.setVisible(true);
