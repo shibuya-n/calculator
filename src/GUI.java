@@ -131,7 +131,7 @@ public class GUI{
         JLabel principalPrompt = new JLabel("PRINCIPAL");
         JTextField principalInput = new JTextField(8);
 
-        JLabel interestPrompt = new JLabel("INTEREST RATE");
+        JLabel interestPrompt = new JLabel("INTEREST (%)");
         JTextField interestInput = new JTextField(8);
 
         JLabel timePrompt = new JLabel("TIME (yrs)");
@@ -156,7 +156,7 @@ public class GUI{
 
                 try {
                     double principalValue =  Double.parseDouble(principalInput.getText());
-                    double interestValue =  Double.parseDouble(interestInput.getText());
+                    double interestValue =  (Double.parseDouble(interestInput.getText()) / 100);
                     double timeValue =  Double.parseDouble(timeInput.getText());
                     double rt = interestValue * timeValue;
                     double euler = 2.71828;
